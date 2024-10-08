@@ -24,20 +24,17 @@ import {
 export interface SidebarLink {
   to: string;
   label: string;
-  icon: string; // Use ComponentType for the icon
-  badge?: number; // Optional badge number
+  icon: string;
 }
 
 export interface SidebarCategory {
-  title?: string; // Optional title for categories
+  title?: string;
   links: SidebarLink[];
 }
 
 const sidebarLinks: SidebarCategory[] = [
   {
-    links: [
-      { to: "/", label: "Dashboard", icon: dashboard }, // Dashboard without a category title
-    ],
+    links: [{ to: "/", label: "Dashboard", icon: dashboard }],
   },
   {
     title: "Customer",

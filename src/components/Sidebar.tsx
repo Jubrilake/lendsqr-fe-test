@@ -5,11 +5,11 @@ import sidebarLinks, {
   SidebarLink,
 } from "@/data/sidebarLinks";
 import { briefCase } from "@/assets";
-import { ChevronDown, ChevronUp } from "lucide-react"; // Importing suitcase and chevron icons
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
-  const [isDropdownOpen, setDropdownOpen] = useState(false); // State to control dropdown
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const handleDropdownToggle = () => {
     setDropdownOpen((prevState) => !prevState);
@@ -54,7 +54,6 @@ const Sidebar: React.FC = () => {
                     Organization 2
                   </Link>
                 </li>
-                {/* Add more organizations as needed */}
               </ul>
             </div>
           )}
@@ -64,7 +63,6 @@ const Sidebar: React.FC = () => {
           <nav className="grid items-start px-2 text-sm font-medium lg:px-1">
             {sidebarLinks.map((category: SidebarCategory, index) => (
               <div key={index}>
-                {/* Render category title if present */}
                 {category.title && (
                   <h3 className="mt-4 mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {category.title}
@@ -80,9 +78,7 @@ const Sidebar: React.FC = () => {
                         : "text-primary text-opacity-50 hover:text-primary"
                     }`}
                   >
-                    <img src={icon} className="h-4 w-4" />{" "}
-                    {/* Icon with className */}
-                    {label}
+                    <img src={icon} className="h-4 w-4" /> {label}
                   </Link>
                 ))}
               </div>

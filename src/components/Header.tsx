@@ -16,7 +16,7 @@ import logo from "../assets/logo.svg";
 import { profile } from "@/assets";
 
 const Header: React.FC = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State to control dropdown
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
     <header className="flex h-14 items-center gap-4 shadow-md bg-white px-4 lg:h-[60px] z-100 lg:px-6">

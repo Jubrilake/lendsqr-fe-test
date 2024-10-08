@@ -2,18 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
-import { FiEye, FiEyeOff } from "react-icons/fi"; // Import eye icons
-import loginImage from "../assets/loginiMG.svg";
-import logo from "../assets/logo.svg";
-
-export const description =
-  "A login page with two columns. The first column has the login form with email and password. There's a Forgot your password link and a link to sign up if you do not have an account. The second column has a cover image.";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { loginImg, logo } from "@/assets";
 
 export function Login() {
-  // State to toggle password visibility
   const [showPassword, setShowPassword] = useState(false);
 
-  // Function to toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -29,7 +23,7 @@ export function Login() {
           />
         </div>
         <img
-          src={loginImage}
+          src={loginImg}
           alt="Login Cover"
           className="h-auto w-auto object-cover"
         />
@@ -53,15 +47,14 @@ export function Login() {
                 required
                 placeholder="Password"
               />
-              {/* Eye Icon to toggle password visibility */}
               <span
                 onClick={togglePasswordVisibility}
                 className="absolute right-3 top-3 cursor-pointer"
               >
                 {showPassword ? (
-                  <FiEyeOff size={20} className="text-primary"  /> // Closed eye icon
+                  <FiEyeOff size={20} className="text-primary" />
                 ) : (
-                  <FiEye size={20} className="text-primary"/> // Open eye icon
+                  <FiEye size={20} className="text-primary" />
                 )}
               </span>
             </div>
