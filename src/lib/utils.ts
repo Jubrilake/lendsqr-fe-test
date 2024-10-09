@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { cva } from "class-variance-authority";
+// import { format } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -37,30 +38,55 @@ export const buttonVariants = cva(
   }
 );
 
-// badgeVariants.ts
-export const badgeVariants = cva(
-  "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-  {
-    variants: {
-      variant: {
-        default:
-          "border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        destructive:
-          "border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
-        outline: "text-foreground",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-);
-
 // numberFormatter.ts
 export const formatNumberWithCommas = (value: number | string): string => {
   const number = typeof value === "string" ? parseFloat(value) : value;
   return number.toLocaleString("en-US");
 };
 
+
+// Utility function to format the date with abbreviated month (e.g., Oct)
+// dateUtils.ts
+
+// dateUtils.ts
+
+export const formatDate = (dateString: string): string => {
+  // Create a Date object from the input string
+  const date = new Date(dateString);
+
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    console.error(`Invalid date string: ${dateString}`);
+    return "Invalid date"; // or any default value you prefer
+  }
+
+  // Define options for formatting
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  };
+
+  // Use Intl.DateTimeFormat to format the date
+  return new Intl.DateTimeFormat('en-US', options).format(date);
+};
+
+
+// Utility function to get styles based on the status
+export const statusStyles = (status: string) => {
+  switch (status.toLowerCase()) {
+    case "active":
+      return "bg-green-100 text-green-700";
+    case "inactive":
+      return "bg-gray-100 text-gray-700";
+    case "pending":
+      return "bg-yellow-100 text-yellow-700";
+    case "blacklisted":
+      return "bg-red-100 text-red-700";
+    default:
+      return "bg-gray-100 text-gray-700";
+  }
+};

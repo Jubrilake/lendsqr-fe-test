@@ -31,6 +31,9 @@ export default {
   				DEFAULT: '#39CDCC',
   				foreground: 'hsl(var(--secondary-foreground))'
   			},
+			light_gray:{
+              DEFAULT:"#545F7D"
+			},
   			muted: {
   				DEFAULT: 'hsl(var(--muted))',
   				foreground: 'hsl(var(--muted-foreground))'

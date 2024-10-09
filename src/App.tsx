@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import Users from "./pages/Users";
+import UserDetail from "./pages/UserDetail";
 
 const App = () => {
   const location = useLocation();
@@ -21,6 +22,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/users" element={<Users />} />
+              <Route path="/users/:id" element={<UserDetail />} />
             </Routes>
           </div>
         </main>
