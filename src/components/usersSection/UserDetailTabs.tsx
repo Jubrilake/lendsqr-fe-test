@@ -4,6 +4,10 @@ import { cn } from "@/lib/utils";
 import { avatar, solidStar, strokeStar } from "@/assets";
 import { Button } from "@/ui/button";
 import GeneralDetails from "./generalInfo/GeneralDetails";
+import { FaNairaSign } from "react-icons/fa6";
+import { useGetAllUsers } from "@/services/users";
+import { UserFullDataType } from "@/components/tables/users/users.model";
+import { formatNumberWithCommas } from "@/lib/utils";
 
 interface UserDetailTabsProps {
   userId?: string; // Allow userId to be undefined
@@ -16,9 +20,21 @@ type SinglUserDetailsTabsType = {
 
 const UserDetailTabs: React.FC<UserDetailTabsProps> = ({ userId }) => {
   const [tab, setTab] = useState(1);
+  const { data: userData, isLoading } = useGetAllUsers();
 
-  if (!userId) {
-    return <div>No User ID available</div>; // Handle the case when userId is undefined
+  // Function to find the user by ID
+  const findUserById = (id: string): UserFullDataType | undefined => {
+    return userData?.find((user: UserFullDataType) => user.id === id);
+  };
+  
+  const user = userId ? findUserById(userId) : undefined; // Find user based on userId
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Handle loading state
+  }
+
+  if (!user) {
+    return <div>No User found with the given ID</div>; // Handle the case when user is not found
   }
 
   const SinglUserDetailsTabs: Array<SinglUserDetailsTabsType> = [
@@ -39,7 +55,7 @@ const UserDetailTabs: React.FC<UserDetailTabsProps> = ({ userId }) => {
   const TabComponent = (): ReactNode => {
     switch (tab) {
       case 1:
-        return <GeneralDetails />;
+        return <GeneralDetails user={user} />; // user is guaranteed to be defined here
       case 2:
         return <h1>Documents</h1>;
       case 3:
@@ -66,7 +82,7 @@ const UserDetailTabs: React.FC<UserDetailTabsProps> = ({ userId }) => {
               <img src={avatar} alt="Avatar" className="w-24 h-24" />
               <div>
                 <h1 className="text-primary font-semibold text-center lg:text-start text-xl leading-10">
-                  Grace Effiom
+                  {user.personalInformation.fullName}
                 </h1>
                 <p className="text-light_gray text-sm">{userId}</p>
               </div>
@@ -85,11 +101,16 @@ const UserDetailTabs: React.FC<UserDetailTabsProps> = ({ userId }) => {
               </div>
 
               <div className="flex flex-col justify-center items-center lg:items-start w-full lg:w-auto">
-                <h1 className="text-xl font-semibold text-primary leading-10">
-                  N200,000.00
+                <h1 className="text-xl font-semibold text-primary leading-10 flex items-center">
+                  <span>
+                    <FaNairaSign />
+                  </span>{" "}
+                  {formatNumberWithCommas(
+                    user.bankDetails.accountBalance.slice(1) || "0"
+                  )}
                 </h1>
                 <p className="text-xs font-normal text-primary">
-                  9912345678 / Providus Bank
+                  {user.bankDetails.accountNumber}/{user.bankDetails.bankName}
                 </p>
               </div>
             </div>

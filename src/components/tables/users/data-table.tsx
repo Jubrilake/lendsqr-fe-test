@@ -23,6 +23,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import UserFilter from "./UserFilter";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -47,7 +48,11 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md border shadow-md border-gray-100 bg-white p-3">
+    <>
+      <div className="flex justify-end mb-4">
+        <UserFilter />
+      </div>
+     <div className="rounded-md border shadow-md border-gray-100 bg-white p-3">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -220,5 +225,7 @@ export function DataTable<TData, TValue>({
         </div>
       </div>
     </div>
+    </>
+   
   );
 }

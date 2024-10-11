@@ -5,6 +5,8 @@ import UserDetailTabs from "@/components/usersSection/UserDetailTabs";
 
 const UserDetail = () => {
   const { userId } = useParams<{ userId: string }>();
+
+
   const navigate = useNavigate();
 
   const handleBack = () => {

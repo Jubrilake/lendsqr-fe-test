@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { UserDataType } from "@/components/tables/users/users.model";
+import { UserFullDataType } from "@/components/tables/users/users.model";
 import axios from "axios";
 
 export const useGetAllUsers = () => {
-  return useQuery<UserDataType[]>({
+  return useQuery<UserFullDataType[]>({
     queryKey: ["getAllUsers"],
     queryFn: async () => {
       const response = await axios.get("/src/userData.json");

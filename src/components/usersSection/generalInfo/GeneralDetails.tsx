@@ -4,16 +4,22 @@ import PersonalInfo from "./PersonalInfo";
 import EducationAndEmployment from "./EducationAndEmployment";
 import Socials from "./Socials";
 import Guarantor from "./Guarantor";
-const GeneralDetails = () => {
+import { UserFullDataType } from "@/components/tables/users/users.model";
+
+interface GeneralDetailsProps {
+  user: UserFullDataType ; // Define the prop type for user
+}
+const GeneralDetails: React.FC<GeneralDetailsProps> = ({user}) => {
   return (
     <Card className="p-5">
       <CardContent>
-        <PersonalInfo />
-        <EducationAndEmployment />
-        <Socials />
-        <Guarantor />
+        <PersonalInfo user={user.personalInformation} />
+        <EducationAndEmployment user={user.educationEmployment} />
+        <Socials user={user.socials} />
+        <Guarantor user={user.guarantor} />
       </CardContent>
     </Card>
+
   );
 };
 
