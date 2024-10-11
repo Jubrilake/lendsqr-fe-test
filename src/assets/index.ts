@@ -2,6 +2,8 @@
 export { default as logo } from "../assets/logo.svg";
 // login background image
 export { default as loginImg } from "../assets/loginiMG.svg";
+// header
+export { default as bell } from "../assets/bell.svg";
 // sidebar icon
 export { default as briefCase } from "../assets/briefcase.svg";
 export { default as auditLogs } from "../assets/auditlogs.svg";
@@ -29,3 +31,6 @@ export { default as activeUsers } from "../assets/activeUsers.svg";
 export { default as alleUsers } from "../assets/allUsers.svg";
 export { default as usersLoan } from "../assets/usersLoans.svg";
 export { default as usersSaving } from "../assets/usersSaving.svg";
+export { default as avatar } from "../assets/avatar.svg";
+export { default as solidStar } from "../assets/solidStar.svg";
+export { default as strokeStar } from "../assets/strokeStar.svg";

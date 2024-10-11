@@ -52,11 +52,18 @@ export function DataTable<TData, TValue>({
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
+              {headerGroup.headers.map((header, index) => {
+                const isMobileHidden = index >= 2; // Only show the first two columns and action column on mobile
+                const isActionColumn = header.column.id === "actions"; // Assuming the column for actions is named "actions"
+
                 return (
                   <TableHead
                     key={header.id}
-                    className="border-b border-gray-100"
+                    className={`border-b border-gray-100 ${
+                      isMobileHidden && !isActionColumn
+                        ? "hidden lg:table-cell"
+                        : "table-cell"
+                    }`}
                   >
                     {header.isPlaceholder
                       ? null
@@ -77,11 +84,26 @@ export function DataTable<TData, TValue>({
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell className="align-baseline " key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+                {row.getVisibleCells().map((cell, index) => {
+                  const isMobileHidden = index >= 2;
+                  const isActionColumn = cell.column.id === "actions";
+
+                  return (
+                    <TableCell
+                      className={`align-baseline ${
+                        isMobileHidden && !isActionColumn
+                          ? "hidden lg:table-cell"
+                          : "table-cell"
+                      }`}
+                      key={cell.id}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             ))
           ) : (
@@ -132,20 +154,17 @@ export function DataTable<TData, TValue>({
             {(() => {
               const pageCount = table.getPageCount();
               const currentPage = table.getState().pagination.pageIndex;
-              const range = 2; // Number of pages to show around the current page
+              const range = 2;
               const pagesToShow = [];
 
-              // Always show the first page
               if (currentPage > 0) {
                 pagesToShow.push(0);
               }
 
-              // Add ellipsis if there are pages before the current page
               if (currentPage > range + 1) {
                 pagesToShow.push("...");
               }
 
-              // Add pages around the current page
               for (
                 let i = Math.max(0, currentPage - range);
                 i <= Math.min(pageCount - 1, currentPage + range);
@@ -154,12 +173,10 @@ export function DataTable<TData, TValue>({
                 pagesToShow.push(i);
               }
 
-              // Add ellipsis if there are pages after the current page
               if (currentPage < pageCount - range - 1) {
                 pagesToShow.push("...");
               }
 
-              // Always show the last page
               if (currentPage < pageCount - 1) {
                 pagesToShow.push(pageCount - 1);
               }
@@ -172,11 +189,11 @@ export function DataTable<TData, TValue>({
                     variant={item === currentPage ? "default" : "outline"}
                     className="h-8 border-0 w-8 p-0"
                   >
-                    {item + 1} {/* Convert to 1-based index for display */}
+                    {item + 1}
                   </Button>
                 ) : (
                   <span key={index} className="h-8 p-0 flex items-center">
-                    {item} {/* Display ellipsis */}
+                    {item}
                   </span>
                 );
               });

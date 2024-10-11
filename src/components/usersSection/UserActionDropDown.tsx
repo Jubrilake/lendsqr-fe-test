@@ -2,16 +2,23 @@
 
 "use client";
 
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/ui/dropdown-menu";
 import { Button } from "@/ui/button";
 import { MoreHorizontal, Eye, UserRoundPlus, UserRoundX } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface UserActionsDropdownProps {
-  userId: string; // Expecting the user ID to be passed as a prop
+  userId: string;
 }
 
-const UserActionsDropdown: React.FC<UserActionsDropdownProps> = ({ userId }) => {
+const UserActionsDropdown: React.FC<UserActionsDropdownProps> = ({
+  userId,
+}) => {
   const navigate = useNavigate();
 
   return (

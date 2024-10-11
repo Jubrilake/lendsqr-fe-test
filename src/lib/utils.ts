@@ -44,36 +44,33 @@ export const formatNumberWithCommas = (value: number | string): string => {
   return number.toLocaleString("en-US");
 };
 
+// formatDate.ts
 
-// Utility function to format the date with abbreviated month (e.g., Oct)
-// dateUtils.ts
+export function formatDate(dateString: string): string {
+  // Remove any spaces in the date string
+  const cleanedDateString = dateString.replace(/ /g, ""); // Remove spaces
 
-// dateUtils.ts
+  const date = new Date(cleanedDateString);
 
-export const formatDate = (dateString: string): string => {
-  // Create a Date object from the input string
-  const date = new Date(dateString);
-
-  // Check if the date is valid
+  // Check for invalid date
   if (isNaN(date.getTime())) {
-    console.error(`Invalid date string: ${dateString}`);
-    return "Invalid date"; // or any default value you prefer
+    console.error(`Invalid date string: ${cleanedDateString}`);
+    return "Invalid Date"; // Return a placeholder or error message
   }
 
-  // Define options for formatting
+  // Options for formatting the date
   const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
+    year: "numeric",
+    month: "short", // Change this to 'short' for 3-character month
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
     hour12: true,
   };
 
-  // Use Intl.DateTimeFormat to format the date
-  return new Intl.DateTimeFormat('en-US', options).format(date);
-};
-
+  // Format the date using toLocaleString
+  return date.toLocaleString("en-US", options);
+}
 
 // Utility function to get styles based on the status
 export const statusStyles = (status: string) => {

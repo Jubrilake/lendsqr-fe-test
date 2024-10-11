@@ -5,7 +5,7 @@
       "userName": "Hendrix Mosley",
       "email": "hendrixmosley@comveyor.com",
       "phoneNumber": "+1 (823) 584-2455",
-      "date": "2020-06-21T12:24:47 -01:00",
+      "date": "2020-06-21T12:24:47-01:00",
       "status": "Inactive"
     },
     {
@@ -14,7 +14,7 @@
       "userName": "Cathleen Fernandez",
       "email": "cathleenfernandez@combot.com",
       "phoneNumber": "+1 (909) 572-3908",
-      "date": "2023-09-29T08:38:23 -01:00",
+      "date": "2023-09-29T08:38:23-01:00",
       "status": "Inactive"
     },
     {
@@ -23,7 +23,7 @@
       "userName": "Harriet Pace",
       "email": "harrietpace@plasto.com",
       "phoneNumber": "+1 (949) 536-2590",
-      "date": "2020-09-28T11:10:40 -01:00",
+      "date": "2020-09-28T11:10:40-01:00",
       "status": "Inactive"
     },
     {
@@ -32,7 +32,7 @@
       "userName": "Nieves Olson",
       "email": "nievesolson@homelux.com",
       "phoneNumber": "+1 (961) 433-3755",
-      "date": "2024-05-09T02:48:37 -01:00",
+      "date": "2024-05-09T02:48:37-01:00",
       "status": "Blacklisted"
     },
     {
@@ -41,7 +41,7 @@
       "userName": "Oneil Graham",
       "email": "oneilgraham@singavera.com",
       "phoneNumber": "+1 (968) 537-2688",
-      "date": "2020-06-05T10:50:44 -01:00",
+      "date": "2020-06-05T10:50:44-01:00",
       "status": "Pending"
     },
     {

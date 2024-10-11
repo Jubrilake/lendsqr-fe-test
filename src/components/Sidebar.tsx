@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
   return (
     <div className="hidden shadow-md bg-muted/5 md:block min-h-screen">
       <div className="flex h-full flex-col gap-2">
-        <div className="relative flex h-14 items-center px-2 lg:h-[60px] lg:px-1">
+        <div className="relative flex h-14 items-center mt-5 px-2 lg:h-[60px] lg:px-2">
           {/* Switch organization dropdown */}
           <button
             onClick={handleDropdownToggle}
@@ -60,11 +60,11 @@ const Sidebar: React.FC = () => {
         </div>
 
         <div className="flex-1">
-          <nav className="grid items-start px-2 text-sm font-medium lg:px-1">
+          <nav className="grid items-start text-sm font-medium">
             {sidebarLinks.map((category: SidebarCategory, index) => (
               <div key={index}>
                 {category.title && (
-                  <h3 className="mt-4 mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  <h3 className="mt-4 mb-2 ml-5 text-xs text-light_gray font-medium uppercase tracking-wider text-muted-foreground">
                     {category.title}
                   </h3>
                 )}
@@ -72,9 +72,9 @@ const Sidebar: React.FC = () => {
                   <Link
                     key={to}
                     to={to}
-                    className={`flex items-center gap-3 px-3 py-2 transition-all ${
+                    className={`flex items-center gap-3 px-5 py-3 transition-all ${
                       location.pathname === to
-                        ? "bg-[#39CDCC] bg-opacity-10 text-primary"
+                        ? "bg-[#39CDCC] relative bg-opacity-10 text-primary before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[3px] before:h-full before:bg-[#39CDCC]"
                         : "text-primary text-opacity-50 hover:text-primary"
                     }`}
                   >

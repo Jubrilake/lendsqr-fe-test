@@ -1,7 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { formatDate, statusStyles } from "@/lib/utils";
 import { IoFilter } from "react-icons/io5";
-
 import { UserDataType } from "./users.model";
 import UserActionsDropdown from "@/components/usersSection/UserActionDropDown";
 
@@ -14,11 +13,22 @@ export const columns: ColumnDef<UserDataType>[] = [
           className="flex items-center gap-x-2 text-light_gray font-semibold cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <h1>ORGANIZATION</h1> <IoFilter />
+          <h1>Organization</h1>
+          <IoFilter />
         </div>
       );
     },
+    cell: ({ getValue }) => {
+      const organization = getValue() as string;
+      return (
+        <span>
+          {organization.charAt(0).toUpperCase() +
+            organization.slice(1).toLowerCase()}
+        </span>
+      ); // Convert to normal case
+    },
   },
+
   {
     accessorKey: "userName",
     header: ({ column }) => {
