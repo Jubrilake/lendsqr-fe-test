@@ -6,7 +6,9 @@ export const useGetAllUsers = () => {
   return useQuery<UserFullDataType[]>({
     queryKey: ["getAllUsers"],
     queryFn: async () => {
-      const response = await axios.get("/src/userData.json");
+      const response = await axios.get(
+        "https://api.jsonsilo.com/public/be765ece-d0ff-4df1-a498-ba9183037b93"
+      );
       return response.data;
     },
   });

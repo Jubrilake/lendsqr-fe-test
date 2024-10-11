@@ -13,41 +13,41 @@ interface GuarantorProps {
 
 const Guarantor: React.FC<GuarantorProps> = ({ user }) => {
   return (
-    <div className="py-5">
-      <h1 className="text-md font-semibold text-primary mb-6">Guarantor</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="py-5 guarantor">
+      <h1 className="usertitle">Guarantor</h1>
+      <div className="userGrid">
         {/* Fullname */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">
+          <h1 className="userheading">
             Fullname
           </h1>
-          <p className="text-md font-medium text-light_gray">{user.fullName}</p>
+          <p className="userParagraph">{user.fullName}</p>
         </div>
 
         {/* Phone Number */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">
+          <h1 className="userheading">
             Phone Number
           </h1>
-          <p className="text-md font-medium text-light_gray">
+          <p className="userParagraph">
             {user.phoneNumber}
           </p>
         </div>
 
         {/* Email */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">
+          <h1 className="userheading">
             Email
           </h1>
-          <p className="text-md font-medium text-light_gray">{user.email}</p>
+          <p className="userParagraph">{user.email}</p>
         </div>
 
         {/* Relationship */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">
+          <h1 className="userheading">
             Relationship
           </h1>
-          <p className="text-md font-medium text-light_gray">
+          <p className="userParagraph">
             {user.relationship}
           </p>
         </div>

@@ -8,9 +8,10 @@ import { FaNairaSign } from "react-icons/fa6";
 import { useGetAllUsers } from "@/services/users";
 import { UserFullDataType } from "@/components/tables/users/users.model";
 import { formatNumberWithCommas } from "@/lib/utils";
+import Preloader from "../shared/PreLoader";
 
 interface UserDetailTabsProps {
-  userId?: string; // Allow userId to be undefined
+  userId?: string;
 }
 
 type SinglUserDetailsTabsType = {
@@ -26,15 +27,15 @@ const UserDetailTabs: React.FC<UserDetailTabsProps> = ({ userId }) => {
   const findUserById = (id: string): UserFullDataType | undefined => {
     return userData?.find((user: UserFullDataType) => user.id === id);
   };
-  
-  const user = userId ? findUserById(userId) : undefined; // Find user based on userId
+
+  const user = userId ? findUserById(userId) : undefined;
 
   if (isLoading) {
-    return <div>Loading...</div>; // Handle loading state
+    return <Preloader />;
   }
 
   if (!user) {
-    return <div>No User found with the given ID</div>; // Handle the case when user is not found
+    return <div>No User found with the given ID</div>;
   }
 
   const SinglUserDetailsTabs: Array<SinglUserDetailsTabsType> = [
@@ -49,13 +50,13 @@ const UserDetailTabs: React.FC<UserDetailTabsProps> = ({ userId }) => {
   const toggleTab =
     (tab: number): MouseEventHandler<HTMLButtonElement> =>
     () => {
-      setTab(tab); // Simply set the tab without switch-case repetition
+      setTab(tab);
     };
 
   const TabComponent = (): ReactNode => {
     switch (tab) {
       case 1:
-        return <GeneralDetails user={user} />; // user is guaranteed to be defined here
+        return <GeneralDetails user={user} />;
       case 2:
         return <h1>Documents</h1>;
       case 3:
@@ -94,9 +95,17 @@ const UserDetailTabs: React.FC<UserDetailTabsProps> = ({ userId }) => {
                   User's Tier
                 </h1>
                 <div className="flex gap-x-1">
-                  <img src={solidStar} alt="Star" className="w-4 h-4" />
-                  <img src={strokeStar} alt="Star" className="w-4 h-4" />
-                  <img src={strokeStar} alt="Star" className="w-4 h-4" />
+                  <img src={solidStar} alt="filled Star" className="w-4 h-4" />
+                  <img
+                    src={strokeStar}
+                    alt=" stroke Star"
+                    className="w-4 h-4"
+                  />
+                  <img
+                    src={strokeStar}
+                    alt=" stroke Star"
+                    className="w-4 h-4"
+                  />
                 </div>
               </div>
 

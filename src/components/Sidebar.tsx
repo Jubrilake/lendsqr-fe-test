@@ -16,41 +16,30 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="hidden shadow-md bg-muted/5 md:block min-h-screen">
-      <div className="flex h-full flex-col gap-2">
-        <div className="relative flex h-14 items-center mt-5 px-2 lg:h-[60px] lg:px-2">
-          {/* Switch organization dropdown */}
-          <button
-            onClick={handleDropdownToggle}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all text-sm font-medium text-muted-foreground hover:text-primary w-full`} // Added class for alignment
-          >
-            <img src={briefCase} className="h-4 w-4" /> {/* Suitcase icon */}
-            <span className="text-sm text-primary">Switch Organization</span>
-            {/* Arrow icon depending on dropdown state */}
+    <div className="sidebar">
+      <div className="sidebar-wrapper">
+        <div className="switch-organization">
+          <button onClick={handleDropdownToggle}>
+            <img src={briefCase} />
+            <span>Switch Organization</span>
+
             {isDropdownOpen ? (
-              <ChevronUp className="h-4 w-4" />
+              <ChevronUp className="chevron-up" />
             ) : (
-              <ChevronDown className="h-4 w-4" />
+              <ChevronDown className="chevron-down" />
             )}
           </button>
 
-          {/* Dropdown menu */}
           {isDropdownOpen && (
-            <div className="absolute left-0 top-full mt-2 w-full bg-white shadow-lg rounded-lg z-10">
+            <div className="switch-organization_dropdown">
               <ul>
                 <li>
-                  <Link
-                    to="/org/1"
-                    className="block px-4 py-2 text-sm hover:bg-muted hover:text-primary"
-                  >
+                  <Link to="/org/1" className="link-block">
                     Organization 1
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/org/2"
-                    className="block px-4 py-2 text-sm hover:bg-muted hover:text-primary"
-                  >
+                  <Link to="/org/2" className="link-block">
                     Organization 2
                   </Link>
                 </li>
@@ -59,23 +48,17 @@ const Sidebar: React.FC = () => {
           )}
         </div>
 
-        <div className="flex-1">
-          <nav className="grid items-start text-sm font-medium">
+        <div className="sidebarnav">
+          <nav>
             {sidebarLinks.map((category: SidebarCategory, index) => (
               <div key={index}>
-                {category.title && (
-                  <h3 className="mt-4 mb-2 ml-5 text-xs text-light_gray font-medium uppercase tracking-wider text-muted-foreground">
-                    {category.title}
-                  </h3>
-                )}
+                {category.title && <h3>{category.title}</h3>}
                 {category.links.map(({ to, label, icon }: SidebarLink) => (
                   <Link
                     key={to}
                     to={to}
-                    className={`flex items-center gap-3 px-5 py-3 transition-all ${
-                      location.pathname === to
-                        ? "bg-[#39CDCC] relative bg-opacity-10 text-primary before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[3px] before:h-full before:bg-[#39CDCC]"
-                        : "text-primary text-opacity-50 hover:text-primary"
+                    className={`link-flex ${
+                      location.pathname === to ? "active" : "inactive"
                     }`}
                   >
                     <img src={icon} className="h-4 w-4" /> {label}

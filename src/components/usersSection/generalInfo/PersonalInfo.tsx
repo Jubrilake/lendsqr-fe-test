@@ -17,81 +17,57 @@ interface PersonalInfoProps {
 
 const PersonalInfo: React.FC<PersonalInfoProps> = ({ user }) => {
   return (
-    <div className="py-5 border-b-2">
+    <div className="py-5 border-b-2 personalInfo">
       {/* Title */}
-      <h1 className="text-md font-semibold text-primary mb-6">
-        Personal Information
-      </h1>
+      <h1 className="usertitle">Personal Information</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="userGrid">
         {/* Fullname */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">
-            Fullname
-          </h1>
-          <p className="text-md font-medium text-light_gray">{user.fullName}</p>
+          <h1 className="userheading">Fullname</h1>
+          <p className="userParagrapgh">{user.fullName}</p>
         </div>
 
         {/* Phone Number */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">
-            Phone Number
-          </h1>
-          <p className="text-md font-medium text-light_gray">
-            {user.phoneNumber}
-          </p>
+          <h1 className="userheading">Phone Number</h1>
+          <p className="userParagrapgh">{user.phoneNumber}</p>
         </div>
 
         {/* Email */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">
-            Email
-          </h1>
-          <p className="text-md font-medium text-light_gray">
-            {user.emailAddress}
-          </p>
+          <h1 className="userheading">Email</h1>
+          <p className="userParagrapgh">{user.emailAddress}</p>
         </div>
 
         {/* BVN */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">BVN</h1>
-          <p className="text-md font-medium text-light_gray">{user.bvn}</p>
+          <h1 className="userheading">BVN</h1>
+          <p className="userParagrapgh">{user.bvn}</p>
         </div>
 
         {/* Gender */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">
-            Gender
-          </h1>
-          <p className="text-md font-medium text-light_gray">{user.gender}</p>
+          <h1 className="userheading">Gender</h1>
+          <p className="userParagrapgh">{user.gender}</p>
         </div>
 
         {/* Marital Status */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">
-            Marital Status
-          </h1>
-          <p className="text-md font-medium text-light_gray">
-            {user.maritalStatus}
-          </p>
+          <h1 className="userheading">Marital Status</h1>
+          <p className="userParagrapgh">{user.maritalStatus}</p>
         </div>
 
         {/* Children */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">
-            Children
-          </h1>
-          <p className="text-md font-medium text-light_gray">{user.children}</p>
+          <h1 className="userheading">Children</h1>
+          <p className="userParagrapgh">{user.children}</p>
         </div>
 
         {/* Type of Residence */}
         <div>
-          <h1 className="text-sm font-normal text-light_gray uppercase">
-            Type of Residence
-          </h1>
-          <p className="text-md font-medium text-light_gray">
-            {user.typeOfResidence}
-          </p>
+          <h1 className="userheading">Type of Residence</h1>
+          <p className="userParagrapgh">{user.typeOfResidence}</p>
         </div>
       </div>
     </div>

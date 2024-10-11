@@ -1,0 +1,17 @@
+header.header {
+  display: flex;
+  height: 56px;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 6px $sm-shadow;
+  background-color: #ffffff;
+  padding-left: 16px;
+  padding-right: 16px;
+  z-index: 100;
+
+  @media (min-width: 1024px) {
+    height: 60px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}

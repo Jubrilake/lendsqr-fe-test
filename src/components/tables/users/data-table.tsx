@@ -120,110 +120,118 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-between pt-6">
-        <div className="w-fit">
-          <div className="flex items-center justify-center text-sm font-medium">
-            Showing {table.getState().pagination.pageIndex + 1} -{" "}
-            {table.getFilteredRowModel().rows.length < table.getPageCount()
-              ? table.getFilteredRowModel().rows.length
-              : table.getPageCount()}{" "}
-            out of {table.getFilteredRowModel().rows.length} entries
-          </div>
+      <div className="flex flex-wrap items-center justify-between pt-6 gap-4">
+  {/* First Section - Showing Entries */}
+  <div className="w-full lg:w-fit flex flex-col lg:flex-row items-center lg:justify-between text-center lg:text-left">
+    <div className="text-sm font-medium">
+      Showing {table.getState().pagination.pageIndex + 1} -{" "}
+      {table.getFilteredRowModel().rows.length < table.getPageCount()
+        ? table.getFilteredRowModel().rows.length
+        : table.getPageCount()}{" "}
+      out of {table.getFilteredRowModel().rows.length} entries
+    </div>
 
-          <div className="flex-1 text-sm text-muted-foreground text-right">
-            {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
-          </div>
-        </div>
+    <div className="text-sm text-muted-foreground text-right mt-2 lg:mt-0 lg:ml-4">
+      {table.getFilteredSelectedRowModel().rows.length} of{" "}
+      {table.getFilteredRowModel().rows.length} row(s) selected.
+    </div>
+  </div>
 
-        <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to first page</span>
-            <ChevronsLeft className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to previous page</span>
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <div className="flex items-center space-x-1">
-            {(() => {
-              const pageCount = table.getPageCount();
-              const currentPage = table.getState().pagination.pageIndex;
-              const range = 2;
-              const pagesToShow = [];
+  {/* Second Section - Pagination Controls */}
+  <div className="w-full lg:w-auto flex flex-wrap justify-center lg:justify-end items-center space-x-2">
+    <Button
+      variant="outline"
+      className="h-8 w-8 p-0 lg:flex hidden"
+      onClick={() => table.setPageIndex(0)}
+      disabled={!table.getCanPreviousPage()}
+    >
+      <span className="sr-only">Go to first page</span>
+      <ChevronsLeft className="h-4 w-4" />
+    </Button>
 
-              if (currentPage > 0) {
-                pagesToShow.push(0);
-              }
+    <Button
+      variant="outline"
+      className="h-8 w-8 p-0"
+      onClick={() => table.previousPage()}
+      disabled={!table.getCanPreviousPage()}
+    >
+      <span className="sr-only">Go to previous page</span>
+      <ChevronLeft className="h-4 w-4" />
+    </Button>
 
-              if (currentPage > range + 1) {
-                pagesToShow.push("...");
-              }
+    {/* Page Numbers */}
+    <div className="flex items-center space-x-1">
+      {(() => {
+        const pageCount = table.getPageCount();
+        const currentPage = table.getState().pagination.pageIndex;
+        const range = 2;
+        const pagesToShow = [];
 
-              for (
-                let i = Math.max(0, currentPage - range);
-                i <= Math.min(pageCount - 1, currentPage + range);
-                i++
-              ) {
-                pagesToShow.push(i);
-              }
+        if (currentPage > 0) {
+          pagesToShow.push(0);
+        }
 
-              if (currentPage < pageCount - range - 1) {
-                pagesToShow.push("...");
-              }
+        if (currentPage > range + 1) {
+          pagesToShow.push("...");
+        }
 
-              if (currentPage < pageCount - 1) {
-                pagesToShow.push(pageCount - 1);
-              }
+        for (
+          let i = Math.max(0, currentPage - range);
+          i <= Math.min(pageCount - 1, currentPage + range);
+          i++
+        ) {
+          pagesToShow.push(i);
+        }
 
-              return pagesToShow.map((item, index) => {
-                return typeof item === "number" ? (
-                  <Button
-                    key={index}
-                    onClick={() => table.setPageIndex(item)}
-                    variant={item === currentPage ? "default" : "outline"}
-                    className="h-8 border-0 w-8 p-0"
-                  >
-                    {item + 1}
-                  </Button>
-                ) : (
-                  <span key={index} className="h-8 p-0 flex items-center">
-                    {item}
-                  </span>
-                );
-              });
-            })()}
-          </div>
-          <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to next page</span>
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to last page</span>
-            <ChevronsRight className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
+        if (currentPage < pageCount - range - 1) {
+          pagesToShow.push("...");
+        }
+
+        if (currentPage < pageCount - 1) {
+          pagesToShow.push(pageCount - 1);
+        }
+
+        return pagesToShow.map((item, index) => {
+          return typeof item === "number" ? (
+            <Button
+              key={index}
+              onClick={() => table.setPageIndex(item)}
+              variant={item === currentPage ? "default" : "outline"}
+              className="h-8 w-8 p-0"
+            >
+              {item + 1}
+            </Button>
+          ) : (
+            <span key={index} className="h-8 p-0 flex items-center">
+              {item}
+            </span>
+          );
+        });
+      })()}
+    </div>
+
+    <Button
+      variant="outline"
+      className="h-8 w-8 p-0"
+      onClick={() => table.nextPage()}
+      disabled={!table.getCanNextPage()}
+    >
+      <span className="sr-only">Go to next page</span>
+      <ChevronRight className="h-4 w-4" />
+    </Button>
+
+    <Button
+      variant="outline"
+      className="h-8 w-8 p-0 lg:flex hidden"
+      onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+      disabled={!table.getCanNextPage()}
+    >
+      <span className="sr-only">Go to last page</span>
+      <ChevronsRight className="h-4 w-4" />
+    </Button>
+  </div>
+</div>
+
     </div>
     </>
    

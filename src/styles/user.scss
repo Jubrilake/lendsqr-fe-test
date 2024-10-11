@@ -1,0 +1,17 @@
+.edu_Employ,
+.guarantor,
+.socials,
+.personalInfo {
+  .usertitle {
+    @include userDetailTitle;
+  }
+  .userGrid {
+    @include userDetailGrid();
+  }
+  .userheading {
+    @include userHeading();
+  }
+  .userParagrapgh {
+    @include userParagraph();
+  }
+}

@@ -38,7 +38,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="flex h-14 items-center gap-4 shadow-md bg-white px-4 lg:h-[60px] z-100 lg:px-6">
+    <header className="header">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">
@@ -48,9 +48,13 @@ const Header: React.FC = () => {
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col px-0">
           <div className="flex h-full flex-col gap-2">
-          <div className="m-auto text-center">
-        <img src={logo} alt="Logo" className="h-auto w-auto object-cover" />
-      </div>
+            <div className="m-auto text-center">
+              <img
+                src={logo}
+                alt="Logo"
+                className="h-auto w-auto object-cover"
+              />
+            </div>
             <div className="relative flex h-14 items-center px-2 lg:h-[60px] lg:px-2">
               {/* Switch organization dropdown */}
               <button
@@ -121,7 +125,7 @@ const Header: React.FC = () => {
                                   to={to}
                                   className={`flex items-center gap-3 px-5 py-2 transition-all ${
                                     location.pathname === to
-                                      ? "bg-[#39CDCC] relative bg-opacity-10 text-primary before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[3px] before:h-full before:bg-[#39CDCC]"
+                                      ? "bg-secondary relative bg-opacity-10 text-primary before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[3px] before:h-full before:bg-[#39CDCC]"
                                       : "text-primary text-opacity-50 hover:text-primary"
                                   }`}
                                 >
@@ -139,7 +143,7 @@ const Header: React.FC = () => {
                           to={to}
                           className={`flex items-center gap-3 px-5 py-2 transition-all ${
                             location.pathname === to
-                              ? "bg-[#39CDCC] relative bg-opacity-10 text-primary before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[3px] before:h-full before:bg-[#39CDCC]"
+                              ? "bg-secondary relative bg-opacity-10 text-primary before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[3px] before:h-full before:bg-[#39CDCC]"
                               : "text-primary text-opacity-50 hover:text-primary"
                           }`}
                         >
