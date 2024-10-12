@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { IoFilter } from "react-icons/io5";
 import {
@@ -57,14 +58,14 @@ export function DataTable<TData, TValue>({
 
   const handleFilter = (filters: Record<string, any>) => {
     const newColumnFilters = Object.entries(filters)
-      .filter(([_, value]) => value !== undefined && value !== "")
+      .filter(([value]) => value !== undefined && value !== "")
       .map(([id, value]) => ({ id, value }));
     setColumnFilters(newColumnFilters);
   };
 
   // Get unique organizations from the data
   const organizations = React.useMemo(() => {
-    // @ts-ignore
+    // @ts-expect-error ignore
     return Array.from(new Set(data.map((item) => item.organization)));
   }, [data]);
 

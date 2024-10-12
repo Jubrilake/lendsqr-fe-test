@@ -1,5 +1,3 @@
-// src/__tests__/Login.spec.ts
-
 import { test, expect } from "@playwright/test";
 
 test("Login form shows validation errors when fields are empty", async ({
