@@ -6,6 +6,7 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { Button } from "@/ui/button";
@@ -18,12 +19,17 @@ import {
   TableRow,
 } from "@/ui/table";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/ui/popover";
+import {
   ChevronsLeft,
   ChevronsRight,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import UserFilter from "./UserFilter";
+import FilterForm from "./UserFilter";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -35,22 +41,59 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<
+  { id: string; value: any }[]
+>([]);
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   });
+
+  const handleFilter = (filters: Record<string, any>) => {
+    const newColumnFilters = Object.entries(filters)
+      .filter(([_, value]) => value !== undefined && value !== "")
+      .map(([id, value]) => ({ id, value }));
+    setColumnFilters(newColumnFilters);
+
+  };
+
+   // Get unique organizations from the data
+   const organizations = React.useMemo(() => {
+    // @ts-ignore
+    return Array.from(new Set(data.map((item) => item.organization)));
+  }, [data]);
+
 
   return (
     <>
       <div className="flex justify-end mb-4">
-        <UserFilter />
+      <Popover>
+          <PopoverTrigger asChild>
+            <Button className="bg-[#39CDCC] hover:bg-[#39CDCC] text-white font-worksans text-sm font-medium flex items-center justify-center gap-2 px-4 py-6 rounded-md">
+              {/* <FilterIcon className="text-white" /> */}
+              <span>Filter</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80 mr-5">
+            <FilterForm
+              onFilter={handleFilter}
+              organizations={organizations}
+              initialFilters={Object.fromEntries(
+                columnFilters.map((filter) => [filter.id, filter.value])
+              )}
+            />
+          </PopoverContent>
+        </Popover>
+        {/* <UserFilter /> */}
       </div>
      <div className="rounded-md border shadow-md border-gray-100 bg-white p-3">
       <Table>

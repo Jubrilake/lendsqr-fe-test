@@ -1,5 +1,3 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
@@ -8,60 +6,43 @@ import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useState } from "react";
-// import { loginImg } from "@/assets";
-import { Logo,LoginImg } from "@/assets"; 
 
-// Define your form schema using Zod
+import { Logo, LoginImg } from "@/assets";
+
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
-  password: z
-    .string()
-    .min(6, "Password must be at least 6 characters long")
+  password: z.string().min(6, "Password must be at least 6 characters long"),
 });
 
-// Infer the TypeScript type from the zod schema
 type FormData = z.infer<typeof formSchema>;
 
 export function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  // Initialize the form with useForm hook
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      password: ""
-    }
+      password: "",
+    },
   });
 
-  // Toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  // Submit handler
   const onSubmit = (data: FormData) => {
-    console.log(data); // Handle form submission
-    navigate("/users"); // Navigate to the users page after successful login
+    console.log(data);
+    navigate("/users");
   };
 
   return (
     <div className="w-full lg:grid h-screen lg:grid-cols-2 ">
       <div className="hidden relative bg-white lg:flex justify-center items-center">
         <div className="absolute top-20 left-20">
-          {/* <img
-            src={logo}
-            alt="Logo"
-            className="h-auto w-auto object-cover dark:brightness-[0.2] dark:grayscale"
-          /> */}
           <Logo className="h-auto w-auto object-cover dark:brightness-[0.2] dark:grayscale" />
         </div>
-        {/* <img
-          src={loginImg}
-          alt="Login Cover"
-          className="h-auto w-auto object-cover"
-        /> */}
         <LoginImg />
       </div>
       <div className="flex items-center justify-center py-12 lg:shadow-lg z-10">
@@ -77,7 +58,12 @@ export function Login() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               {/* Email Field */}
               <div className="grid gap-2">
-                <label htmlFor="email" className="text-sm font-medium text-[#545F7D]">Email</label>
+                <label
+                  htmlFor="email"
+                  className="text-sm font-medium text-[#545F7D]"
+                >
+                  Email
+                </label>
                 <Input
                   id="email"
                   type="email"
@@ -91,7 +77,12 @@ export function Login() {
 
               {/* Password Field */}
               <div className="grid gap-2 relative">
-                <label htmlFor="password" className="text-sm font-medium text-[#545F7D]">Password</label>
+                <label
+                  htmlFor="password"
+                  className="text-sm font-medium text-[#545F7D]"
+                >
+                  Password
+                </label>
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
@@ -113,7 +104,6 @@ export function Login() {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <Button type="submit" variant="success" className="w-full">
                 Login
               </Button>

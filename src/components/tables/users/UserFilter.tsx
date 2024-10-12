@@ -1,231 +1,155 @@
-"use client";
+import { Button } from "@/ui/button"
+import { Calendar } from "@/ui/calendar"
+import { Input } from "@/ui/input"
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/select"
+import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
+import { useEffect, useState } from "react"
+import { DateRange } from "react-day-picker"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FormProvider } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "@/ui/button";
-import { Input } from "@/ui/input";
-import { Popover, PopoverTrigger, PopoverContent } from "@/ui/popover";
-import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/ui/select";
-import { IoFilter } from "react-icons/io5";
+interface FilterFormProps {
+  onFilter: (filters: Record<string, any>) => void
+  initialFilters: Record<string, any>
+  organizations: string[]
+}
+export default function FilterForm({ onFilter, organizations,initialFilters }: FilterFormProps) {
+  const [filters, setFilters] = useState<Record<string, any>>({})
+  const [date, setDate] = useState<DateRange>()
 
-// Define your form schema using Zod
-const formSchema = z
-  .object({
-    organization: z.string().optional(),
-    username: z
-      .string()
-      .min(2, {
-        message: "Username must be at least 2 characters.",
+  useEffect(() => {
+    setFilters(initialFilters)
+    setDate(initialFilters.date)
+  }, [initialFilters])
+
+  console.log(filters)
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    if (name === 'phoneNumber') {
+      const numericValue = value.replace(/\D/g, '')
+      setFilters(prev => ({
+        ...prev,
+        [name]: numericValue === '' ? undefined : numericValue
+      }))
+    } else {
+      setFilters(prev => {
+        const newFilters = { ...prev, [name]: value }
+        if (value === '') delete newFilters[name]
+        return newFilters
       })
-      .optional(),
-    email: z.string().optional(),
-    date: z.string().optional(),
-    phoneNumber: z.string().optional(),
-    status: z.enum(["Pending", "Active", "Inactive", "Blacklisted"]).optional(),
-  })
-  .refine(
-    (data) => {
-      return Object.values(data).some(
-        (value) => value !== "" && value !== undefined
-      );
-    },
-    {
-      message: "At least one field must be filled.",
-      path: [], // specify the path to attach the error message
     }
-  );
+  }
 
-// Function to get filter data from local storage
-const getStoredFilterData = () => {
-  const data = localStorage.getItem("filterData");
-  return data
-    ? JSON.parse(data)
-    : {
-        organization: "",
-        username: "",
-        email: "",
-        date: "",
-        phoneNumber: "",
-        status: "Pending",
-      }; // Default values if no data found
-};
+  const handleSelectChange = (name: string, value: string) => {
+    setFilters(prev => {
+      const newFilters = { ...prev, [name]: value === 'all' ? undefined : value }
+      if (value === 'all') delete newFilters[name]
+      return newFilters
+    })
+  }
 
-export function FilterForm() {
-  // Initialize the form with useForm hook
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: getStoredFilterData(), // Load data from local storage
-  });
+  const handleDateChange = (range: DateRange) => {
+    setDate(range)
+    if (range?.from && range?.to) {
+      setFilters(prev => ({ ...prev, date: range }))
+    } else {
+      setFilters(prev => {
+        const { date, ...rest } = prev
+        return rest
+      })
+    }
+  }
 
-  // Define the submit handler
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data); // Handle your form submission
-    localStorage.setItem("filterData", JSON.stringify(data)); // Store filter data in local storage
-  };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    onFilter(filters)
+  }
 
-  // Define reset handler
-  const onReset = () => {
-    form.reset(); // Reset form fields to default values
-    localStorage.removeItem("filterData"); // Clear local storage
-  };
+  const handleReset = () => {
+    setFilters({})
+    setDate(undefined)
+    onFilter({})
+  }
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button className="flex items-center gap-x-2" variant="default">
-          Filter <IoFilter />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-80 p-4 bg-white shadow-md">
-        <FormProvider {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* Organization Field */}
-            <FormField
-              control={form.control}
-              name="organization"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Organization</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select organization" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Org1">Organization 1</SelectItem>
-                      <SelectItem value="Org2">Organization 2</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label htmlFor="organization" className="text-sm font-medium">Organization</label>
+        <Select onValueChange={(value) => handleSelectChange('organization', value)} value={filters.organization || 'all'}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All</SelectItem>
+            {organizations.map((org) => (
+              <SelectItem key={org} value={org}>{org}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <div>
+        <label htmlFor="userName" className="text-sm font-medium">Username</label>
+        <Input name="userName" placeholder="User" onChange={handleInputChange} value={filters.userName || ''} />
+      </div>
+      <div>
+        <label htmlFor="email" className="text-sm font-medium">Email</label>
+        <Input name="email" placeholder="Email" onChange={handleInputChange} value={filters.email || ''} />
+      </div>
+      <div>
+        <label htmlFor="date" className="text-sm font-medium">Date Range</label>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="w-full justify-start text-left font-normal">
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {date?.from ? (
+                date.to ? (
+                  <>
+                    {format(date.from, "LLL dd, y")} - {format(date.to, "LLL dd, y")}
+                  </>
+                ) : (
+                  format(date.from, "LLL dd, y")
+                )
+              ) : (
+                <span>Pick a date range</span>
               )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              initialFocus
+              mode="range"
+              defaultMonth={date?.from}
+              selected={date}
+              onSelect={handleDateChange}
+              numberOfMonths={2}
             />
-
-            {/* Username Field */}
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter username" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Email Field */}
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Date Field */}
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Date</FormLabel>
-                  <FormControl>
-                    <Input type="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Phone Number Field */}
-            <FormField
-              control={form.control}
-              name="phoneNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter phone number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Status Field */}
-            <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Status</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Pending">Pending</SelectItem>
-                      <SelectItem value="Active">Active</SelectItem>
-                      <SelectItem value="Inactive">Inactive</SelectItem>
-                      <SelectItem value="Blacklisted">Blacklisted</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Action Buttons */}
-            <div className="flex justify-between gap-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onReset}
-                className="w-full"
-              >
-                Reset
-              </Button>
-              <Button
-                variant="secondary"
-                type="submit"
-                className="w-full text-white"
-              >
-                Filter
-              </Button>
-            </div>
-          </form>
-        </FormProvider>
-      </PopoverContent>
-    </Popover>
-  );
+          </PopoverContent>
+        </Popover>
+      </div>
+      <div>
+        <label htmlFor="phoneNumber" className="text-sm font-medium">Phone Number</label>
+        <Input type="tel" name="phoneNumber" placeholder="Phone Number" onChange={handleInputChange} value={filters.phoneNumber || ''} />
+      </div>
+      <div>
+        <label htmlFor="status" className="text-sm font-medium">Status</label>
+        <Select onValueChange={(value) => handleSelectChange('status', value)} value={filters.status || 'all'}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All</SelectItem>
+            <SelectItem value="Active">Active</SelectItem>
+            <SelectItem value="Inactive">Inactive</SelectItem>
+            <SelectItem value="Pending">Pending</SelectItem>
+            <SelectItem value="Blacklisted">Blacklisted</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="flex justify-between">
+        <Button type="button" variant="outline" onClick={handleReset}>Reset</Button>
+        <Button type="submit">Search</Button>
+      </div>
+    </form>
+  )
 }
-
-export default FilterForm;

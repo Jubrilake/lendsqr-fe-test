@@ -1,8 +1,25 @@
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef,FilterFn } from "@tanstack/react-table";
 import { formatDate, statusStyles } from "@/lib/utils";
 import { IoFilter } from "react-icons/io5";
 import { UserDataType } from "./users.model";
 import UserActionsDropdown from "@/components/usersSection/UserActionDropDown";
+import {
+  parseISO,
+  isWithinInterval,
+  startOfDay,
+  endOfDay,
+} from "date-fns";
+import { DateRange } from "react-day-picker";
+
+const dateRangeFilter: FilterFn<UserDataType> = (row, columnId, value: DateRange) => {
+  if (!value || !value.from || !value.to) return true;
+  const cellValue = row.getValue(columnId) as string;
+  const dateValue = parseISO(cellValue);
+  return isWithinInterval(dateValue, {
+    start: startOfDay(value.from),
+    end: endOfDay(value.to),
+  });
+};
 
 export const columns: ColumnDef<UserDataType>[] = [
   {
@@ -13,7 +30,7 @@ export const columns: ColumnDef<UserDataType>[] = [
           className="flex items-center gap-x-2 text-light_gray font-semibold cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <h1>Organization</h1>
+          <h1>ORGANIZATION</h1>
           <IoFilter />
         </div>
       );
@@ -82,6 +99,7 @@ export const columns: ColumnDef<UserDataType>[] = [
       const date = getValue() as string;
       return <span>{formatDate(date)}</span>;
     },
+    filterFn: dateRangeFilter,
   },
   {
     accessorKey: "status",
@@ -100,6 +118,7 @@ export const columns: ColumnDef<UserDataType>[] = [
         <span className={`px-2 py-1 rounded-full ${styles}`}>{status}</span>
       );
     },
+    filterFn: "equals",
   },
   {
     id: "actions",
