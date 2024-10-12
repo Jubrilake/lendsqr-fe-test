@@ -70,6 +70,8 @@ Displays user details retrieved from the API.
 Fetches user data using Tansack queries.
 Shows relevant information about the selected user.
 
+4. API Integration
+
 The app uses Tansack queries to interact with the hosted API, allowing efficient querying and filtering of user records. Here’s an example of how a query might be structured:
 
 import { createQuery } from 'tansack-query';
@@ -86,8 +88,20 @@ return response.data;
 
 This approach allows for efficient querying, filtering, and sorting of user data from the backend API.
 
-4. Mobile Responsiveness
+5. Mock Data Generation & Hosting
+   Data Generation with JSON-Generator.com
+   To generate mock user data for the app, I used json-generator.com, a simple tool to generate fake data based on customizable templates.
+
+6. Hosting Data with JSONSilo
+   After generating the mock data, I hosted it using JSONSilo, a free service that allows you to host JSON data files. Here’s how you can use it:
+
+Go to JSONSilo.
+Click on Create JSON and paste the generated data into the provided textarea.
+Click Save.
+JSONSilo will generate a URL where your JSON data is hosted, which can be used as an API endpoint in your app.
+
+7. Mobile Responsiveness
    The app is fully responsive using TailwindCSS's utility-first classes. All pages are designed to adapt to different screen sizes, making the app mobile-friendly.
 
-5. Testing
+8. Testing
    Playwright is used for end-to-end testing to ensure the functionality of the app. You can run the tests with the following command:
