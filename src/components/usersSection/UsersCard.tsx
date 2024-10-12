@@ -7,7 +7,7 @@ const UsersCard = () => {
       {cardData.map((card, index) => (
         <Card style={{border:"none"}} key={index} x-chunk={`dashboard-01-chunk-${index}`}>
           <CardHeader className="flex flex-col space-y-3 pb-2">
-            <img className="w-10 h-10" src={card.icon} alt="" />
+            <card.icon />
             <CardTitle className="text-sm font-medium text-[#545F7D]">{card.title}</CardTitle>
           </CardHeader>
           <CardContent>

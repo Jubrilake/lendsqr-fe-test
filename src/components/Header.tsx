@@ -1,9 +1,7 @@
 import { useState } from "react";
+// export { default as Logo } from "../assets/logo.svg?react";
 import { Link, useLocation } from "react-router-dom";
-import sidebarLinks, {
-  SidebarCategory,
-  SidebarLink,
-} from "@/data/sidebarLinks";
+import sidebarLinks from "@/data/sidebarLinks";
 import { Menu, Search, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/ui/button";
 import {
@@ -12,11 +10,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/ui/dropdown-menu";
-import { briefCase } from "@/assets";
+import { BriefCase } from "@/assets";
 import { Sheet, SheetContent, SheetTrigger } from "@/ui/sheet";
 import { Input } from "@/ui/input";
-import logo from "../assets/logo.svg";
-import { profile, bell } from "@/assets";
+// import logo from "../assets/logo.svg";
+import { Profile, Bell } from "@/assets";
+import { Logo } from "@/assets";
 
 const Header: React.FC = () => {
   const [isOrgDropdownOpen, setIsOrgDropdownOpen] = useState(false);
@@ -41,7 +40,7 @@ const Header: React.FC = () => {
     <header className="header">
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="shrink-0 md:hidden">
+          <Button variant="outline" size="icon" className="shrink-0 flex lg:hidden">
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
@@ -49,11 +48,7 @@ const Header: React.FC = () => {
         <SheetContent side="left" className="flex flex-col px-0">
           <div className="flex h-full flex-col gap-2">
             <div className="m-auto text-center">
-              <img
-                src={logo}
-                alt="Logo"
-                className="h-auto w-auto object-cover"
-              />
+              <Logo />
             </div>
             <div className="relative flex h-14 items-center px-2 lg:h-[60px] lg:px-2">
               {/* Switch organization dropdown */}
@@ -61,7 +56,7 @@ const Header: React.FC = () => {
                 onClick={handleOrgDropdownToggle}
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all text-sm font-medium text-muted-foreground hover:text-primary w-full`} // Added class for alignment
               >
-                <img src={briefCase} className="h-4 w-4" />{" "}
+                <BriefCase />
                 {/* Suitcase icon */}
                 <span className="text-sm text-primary">
                   Switch Organization
@@ -101,7 +96,7 @@ const Header: React.FC = () => {
 
             <div className="flex-1">
               <nav className="grid items-start text-sm font-medium">
-                {sidebarLinks.map((category: SidebarCategory, index) => (
+                {sidebarLinks.map((category, index) => (
                   <div key={index}>
                     {category.title ? (
                       <div>
@@ -118,36 +113,34 @@ const Header: React.FC = () => {
                         </button>
                         {openCategories[category.title] && (
                           <div className="">
-                            {category.links.map(
-                              ({ to, label, icon }: SidebarLink) => (
-                                <Link
-                                  key={to}
-                                  to={to}
-                                  className={`flex items-center gap-3 px-5 py-2 transition-all ${
-                                    location.pathname === to
-                                      ? "bg-secondary relative bg-opacity-10 text-primary before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[3px] before:h-full before:bg-[#39CDCC]"
-                                      : "text-primary text-opacity-50 hover:text-primary"
-                                  }`}
-                                >
-                                  <img src={icon} className="h-4 w-4" /> {label}
-                                </Link>
-                              )
-                            )}
+                            {category.links.map((navlink) => (
+                              <Link
+                                key={navlink.to}
+                                to={navlink.to}
+                                className={`flex items-center gap-3 px-5 py-2 transition-all ${
+                                  location.pathname === navlink.to
+                                    ? "bg-secondary relative bg-opacity-10 text-primary before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[3px] before:h-full before:bg-[#39CDCC]"
+                                    : "text-primary text-opacity-50 hover:text-primary"
+                                }`}
+                              >
+                                <navlink.icon /> {navlink.label}
+                              </Link>
+                            ))}
                           </div>
                         )}
                       </div>
                     ) : (
-                      category.links.map(({ to, label, icon }: SidebarLink) => (
+                      category.links.map((navlink) => (
                         <Link
-                          key={to}
-                          to={to}
+                          key={navlink.to}
+                          to={navlink.to}
                           className={`flex items-center gap-3 px-5 py-2 transition-all ${
-                            location.pathname === to
+                            location.pathname === navlink.to
                               ? "bg-secondary relative bg-opacity-10 text-primary before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[3px] before:h-full before:bg-[#39CDCC]"
                               : "text-primary text-opacity-50 hover:text-primary"
                           }`}
                         >
-                          <img src={icon} className="h-4 w-4" /> {label}
+                          <navlink.icon /> {navlink.label}
                         </Link>
                       ))
                     )}
@@ -159,17 +152,17 @@ const Header: React.FC = () => {
         </SheetContent>
       </Sheet>
 
-      <div className="w-[20%] hidden md:block">
-        <img src={logo} alt="Logo" className="h-auto w-auto object-cover" />
+      <div className="w-[20%] hidden lg:block">
+        <Logo />
       </div>
 
       <div className="w-full flex-1">
-        <form className="lg:w-1/2 w-full">
+        <form className="lg:w-1/2 w-full sm:w-[70%]">
           <div className="flex items-center">
             <Input
               type="search"
               placeholder="Search for anything"
-              className="appearance-none rounded-l-md pl-8 rounded-r-none shadow-none md:w-1/3 lg:w-2/3"
+              className="appearance-none rounded-l-md pl-8 rounded-r-none shadow-none"
             />
             <div className="bg-secondary p-3 rounded-r-md">
               <Search className="h-4 w-4 text-white" />
@@ -178,12 +171,12 @@ const Header: React.FC = () => {
         </form>
       </div>
 
-      <div className="w-[18%] md:w-[7%] lg:flex justify-between items-center hidden">
+      <div className=" md:w-[10%] lg:w-[7%] sm:flex justify-between items-center hidden">
         <Link className="underline text-sm text-primary" to="#">
           Docs
         </Link>
         <div>
-          <img src={bell} alt="Bell" />
+          <Bell />
         </div>
       </div>
 
@@ -191,7 +184,7 @@ const Header: React.FC = () => {
         <DropdownMenuTrigger asChild>
           <div className="flex items-center gap-x-3">
             <div className="rounded-full overflow-hidden">
-              <img src={profile} alt="Profile" />
+              <Profile />
             </div>
             <Button className="p-0" variant="ghost">
               <span className="hidden md:block text-primary font-medium">

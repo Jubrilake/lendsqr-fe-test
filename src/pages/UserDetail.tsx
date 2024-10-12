@@ -6,15 +6,13 @@ import UserDetailTabs from "@/components/usersSection/UserDetailTabs";
 const UserDetail = () => {
   const { userId } = useParams<{ userId: string }>();
 
-
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate(-1);
   };
-
   return (
-    <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-16 bg-muted-foreground/5">
+    <main className="grid grid-cols-[100%] flex-1 -z-10 flex-col lg:ml-60 ml:0 sm:pt-32 gap-4 p-4 md:gap-8 sm:px-14 bg-muted-foreground/5">
       <button
         onClick={handleBack}
         className="flex items-center space-x-2 w-fit text-light_gray font-medium"

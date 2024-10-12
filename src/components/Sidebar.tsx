@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import sidebarLinks, {
-  SidebarCategory,
-  SidebarLink,
-} from "@/data/sidebarLinks";
-import { briefCase } from "@/assets";
+import sidebarLinks from "@/data/sidebarLinks";
+
+import { BriefCase } from "@/assets";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 const Sidebar: React.FC = () => {
@@ -20,7 +18,7 @@ const Sidebar: React.FC = () => {
       <div className="sidebar-wrapper">
         <div className="switch-organization">
           <button onClick={handleDropdownToggle}>
-            <img src={briefCase} />
+            <BriefCase />
             <span>Switch Organization</span>
 
             {isDropdownOpen ? (
@@ -50,18 +48,18 @@ const Sidebar: React.FC = () => {
 
         <div className="sidebarnav">
           <nav>
-            {sidebarLinks.map((category: SidebarCategory, index) => (
+            {sidebarLinks.map((category, index) => (
               <div key={index}>
                 {category.title && <h3>{category.title}</h3>}
-                {category.links.map(({ to, label, icon }: SidebarLink) => (
+                {category.links.map((navlink) => (
                   <Link
-                    key={to}
-                    to={to}
+                    key={navlink.to}
+                    to={navlink.to}
                     className={`link-flex ${
-                      location.pathname === to ? "active" : "inactive"
+                      location.pathname === navlink.to ? "active" : "inactive"
                     }`}
                   >
-                    <img src={icon} className="h-4 w-4" /> {label}
+                    {<navlink.icon />} {navlink.label}
                   </Link>
                 ))}
               </div>

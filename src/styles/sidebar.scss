@@ -2,13 +2,22 @@
   display: none;
   box-shadow: 0 4px 6px $sm-shadow;
   background-color: rgba(var(--color-muted), 0.05);
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  flex:30%;
+  z-index: 1;
+  padding-top: 6rem;
 
   .sidebar-wrapper {
     display: flex;
     height: 100%;
     flex-direction: column;
     gap: 0.5rem;
+  
 
     .switch-organization {
       position: relative;
@@ -138,7 +147,7 @@
     }
   }
 
-  @media (min-width: 768px) {
-    display: block;
+  @media (min-width: 1024px) {
+    display: flex;
   }
 }

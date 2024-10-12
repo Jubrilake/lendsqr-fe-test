@@ -1,7 +1,7 @@
 import { useState, MouseEventHandler, ReactNode } from "react";
 import { Card, CardContent } from "@/ui/card";
 import { cn } from "@/lib/utils";
-import { avatar, solidStar, strokeStar } from "@/assets";
+import { Avatar, SolidStar, StrokeStar } from "@/assets";
 import { Button } from "@/ui/button";
 import GeneralDetails from "./generalInfo/GeneralDetails";
 import { FaNairaSign } from "react-icons/fa6";
@@ -80,7 +80,7 @@ const UserDetailTabs: React.FC<UserDetailTabsProps> = ({ userId }) => {
             {/* First Section - Avatar and User Info */}
             <div className="flex lg:flex-row flex-col items-center gap-x-5 border-b-2 lg:border-b-0 lg:py-0 py-4">
               {/* Increase avatar size here */}
-              <img src={avatar} alt="Avatar" className="w-24 h-24" />
+              <Avatar />
               <div>
                 <h1 className="text-primary font-semibold text-center lg:text-start text-xl leading-10">
                   {user.personalInformation.fullName}
@@ -95,17 +95,9 @@ const UserDetailTabs: React.FC<UserDetailTabsProps> = ({ userId }) => {
                   User's Tier
                 </h1>
                 <div className="flex gap-x-1">
-                  <img src={solidStar} alt="filled Star" className="w-4 h-4" />
-                  <img
-                    src={strokeStar}
-                    alt=" stroke Star"
-                    className="w-4 h-4"
-                  />
-                  <img
-                    src={strokeStar}
-                    alt=" stroke Star"
-                    className="w-4 h-4"
-                  />
+                  <SolidStar />
+                  <StrokeStar />
+                  <StrokeStar />
                 </div>
               </div>
 
@@ -126,7 +118,7 @@ const UserDetailTabs: React.FC<UserDetailTabsProps> = ({ userId }) => {
           </div>
         </CardContent>
 
-        <div className="flex flex-wrap justify-between pt-6">
+        <div className="flex overflow-x-auto justify-between pt-6">
           {SinglUserDetailsTabs.map((data) => (
             <Button
               key={data.tab}

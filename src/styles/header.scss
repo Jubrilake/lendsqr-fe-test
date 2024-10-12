@@ -1,5 +1,6 @@
 header.header {
   display: flex;
+  position: sticky;
   height: 56px;
   align-items: center;
   gap: 16px;
@@ -7,11 +8,19 @@ header.header {
   background-color: #ffffff;
   padding-left: 16px;
   padding-right: 16px;
-  z-index: 100;
+  z-index: 40;
 
   @media (min-width: 1024px) {
     height: 60px;
     padding-left: 24px;
     padding-right: 24px;
   }
+
+  @media (min-width: 640px) {
+    position: fixed;
+    width: 100%;
+    height: auto;
+    padding:  1rem 1rem;
+  }
+  
 }

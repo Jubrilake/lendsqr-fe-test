@@ -3,7 +3,7 @@ import UserTable from "@/components/usersSection/UserTable";
 
 const Users = () => {
   return (
-    <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-16 bg-muted-foreground/5">
+    <main className="grid grid-cols-[100%] flex-1 -z-10 flex-col lg:ml-60 ml:0 sm:pt-32 gap-4 p-4 md:gap-8 sm:px-14 bg-muted-foreground/5">
       <h1 className="text-primary font-semibold text-2xl">Users</h1>
       <UsersCard />
       <UserTable />

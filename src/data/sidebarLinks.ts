@@ -1,90 +1,91 @@
 import {
-  briefCase,
-  auditLogs,
-  dashboard,
-  decisions,
-  feesAndCharges,
-  karma,
-  loanRequest,
-  loans,
-  preferences,
-  reports,
-  savingProducts,
-  savings,
-  serviceAccount,
-  services,
-  settlement,
-  transaction,
-  users,
-  whiteList,
-  guarantors,
-  feesAndPricing,
+  BriefCase,
+  AuditLogs,
+  Dashboard,
+  Decisions,
+  FeesAndCharges,
+  Karma,
+  LoanRequest,
+  Loans,
+  Preferences,
+  Reports,
+  SavingProducts,
+  Savings,
+  ServiceAccount,
+  Services,
+  Settlement,
+  Transaction,
+  Users,
+  WhiteList,
+  Guarantors,
+  FeesAndPricing,
 } from "@/assets";
+// import { User } from "lucide-react";
 
-export interface SidebarLink {
-  to: string;
-  label: string;
-  icon: string;
-}
+// export interface SidebarLink {
+//   to: string;
+//   label: string;
+//   icon: any;
+// }
 
-export interface SidebarCategory {
-  title?: string;
-  links: SidebarLink[];
-}
+// export interface SidebarCategory {
+//   title?: string;
+//   links: SidebarLink[];
+// }
 
-const sidebarLinks: SidebarCategory[] = [
+const sidebarLinks = [
   {
-    links: [{ to: "/", label: "Dashboard", icon: dashboard }],
+    links: [{ to: "/", label: "Dashboard", icon: Dashboard  }],
   },
   {
     title: "Customer",
     links: [
-      { to: "/users", label: "Users", icon: users },
-      { to: "/guarantors", label: "Guarantors", icon: guarantors },
-      { to: "/loans", label: "Loans", icon: loans },
-      { to: "/decision-models", label: "Decision Models", icon: decisions },
-      { to: "/savings", label: "Savings", icon: savings },
-      { to: "/loan-request", label: "Loan Request", icon: loanRequest },
-      { to: "/whitelist", label: "Whitelist", icon: whiteList },
-      { to: "/karma", label: "Karma", icon: karma },
+      { to: "/users", label: "Users", icon: Users },
+      { to: "/guarantors", label: "Guarantors", icon: Guarantors },
+      { to: "/loans", label: "Loans", icon: Loans },
+      { to: "/decision-models", label: "Decision Models", icon: Decisions },
+      { to: "/savings", label: "Savings", icon: Savings },
+      { to: "/loan-request", label: "Loan Request", icon: LoanRequest },
+      { to: "/whitelist", label: "Whitelist", icon: WhiteList },
+      { to: "/karma", label: "Karma", icon: Karma },
     ],
   },
   {
     title: "Business",
     links: [
-      { to: "/organization", label: "Organization", icon: briefCase },
-      { to: "/loan-products", label: "Loan Products", icon: loanRequest },
+      { to: "/organization", label: "Organization", icon: BriefCase },
+      { to: "/loan-products", label: "Loan Products", icon: LoanRequest },
       {
         to: "/savings-products",
         label: "Savings Products",
-        icon: savingProducts,
+        icon: SavingProducts,
       },
       {
         to: "/fees-and-charges",
         label: "Fees and Charges",
-        icon: feesAndCharges,
+        icon: FeesAndCharges,
       },
-      { to: "/transactions", label: "Transactions", icon: transaction },
-      { to: "/services", label: "Services", icon: services },
+      { to: "/transactions", label: "Transactions", icon: Transaction },
+      { to: "/services", label: "Services", icon: Services },
       {
         to: "/service-account",
         label: "Service Account",
-        icon: serviceAccount,
+        icon: ServiceAccount,
       },
-      { to: "/settlements", label: "Settlements", icon: settlement },
-      { to: "/reports", label: "Reports", icon: reports },
+      { to: "/settlements", label: "Settlements", icon: Settlement },
+      { to: "/reports", label: "Reports", icon: Reports },
     ],
   },
   {
     title: "Settings",
     links: [
-      { to: "/preferences", label: "Preferences", icon: preferences },
+      { to: "/preferences", label: "Preferences", icon: Preferences },
       {
         to: "/fees-and-pricing",
         label: "Fees and Pricing",
-        icon: feesAndPricing,
+        icon: FeesAndPricing,
       },
-      { to: "/audit-logs", label: "Audit Logs", icon: auditLogs },
+      { to: "/audit-logs", label: "Audit Logs", icon: AuditLogs },
     ],
   },
 ];

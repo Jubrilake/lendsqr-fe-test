@@ -1,6 +1,5 @@
 import { useLocation, Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import Users from "./pages/Users";
@@ -10,21 +9,20 @@ const App = () => {
   const location = useLocation();
   return (
     <>
-      {location.pathname === "/login" ? (
+      {location.pathname === "/" ? (
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
         </Routes>
       ) : (
         <main className="min-h-screen w-full">
           <Header />
-          <div className="grid w-full md:grid-cols-[250px_1fr]">
+          {/* <div className="flex w-full  md:flex-col"> */}
             <Sidebar />
             <Routes>
-              <Route path="/" element={<Dashboard />} />
               <Route path="/users" element={<Users />} />
               <Route path="/users/:userId" element={<UserDetail />} />
             </Routes>
-          </div>
+          {/* </div> */}
         </main>
       )}
     </>
