@@ -1,111 +1,164 @@
-import { Button } from "@/ui/button"
-import { Calendar } from "@/ui/calendar"
-import { Input } from "@/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/select"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { DateRange } from "react-day-picker"
+import { Button } from "@/ui/button";
+import { Calendar } from "@/ui/calendar";
+import { Input } from "@/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/ui/select";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { DateRange } from "react-day-picker";
+
+interface FilterValues {
+  organization?: string;
+  userName?: string;
+  email?: string;
+  phoneNumber?: string;
+  date?: DateRange;
+  status?: string;
+  [key: string]: string | DateRange | undefined;
+}
 
 interface FilterFormProps {
-  onFilter: (filters: Record<string, any>) => void
-  initialFilters: Record<string, any>
-  organizations: string[]
+  onFilter: (filters: FilterValues) => void;
+  initialFilters: FilterValues;
+  organizations: string[];
 }
-export default function FilterForm({ onFilter, organizations,initialFilters }: FilterFormProps) {
-  const [filters, setFilters] = useState<Record<string, any>>({})
-  const [date, setDate] = useState<DateRange>()
+
+export default function FilterForm({
+  onFilter,
+  organizations,
+  initialFilters,
+}: FilterFormProps) {
+  const [filters, setFilters] = useState<FilterValues>({});
+  const [date, setDate] = useState<DateRange>();
 
   useEffect(() => {
-    setFilters(initialFilters)
-    setDate(initialFilters.date)
-  }, [initialFilters])
+    setFilters(initialFilters);
+    setDate(initialFilters.date);
+  }, [initialFilters]);
 
-  console.log(filters)
+  console.log(filters);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    if (name === 'phoneNumber') {
-      const numericValue = value.replace(/\D/g, '')
-      setFilters(prev => ({
+    const { name, value } = e.target;
+    if (name === "phoneNumber") {
+      const numericValue = value.replace(/\D/g, "");
+      setFilters((prev) => ({
         ...prev,
-        [name]: numericValue === '' ? undefined : numericValue
-      }))
+        [name]: numericValue === "" ? undefined : numericValue,
+      }));
     } else {
-      setFilters(prev => {
-        const newFilters = { ...prev, [name]: value }
-        if (value === '') delete newFilters[name]
-        return newFilters
-      })
+      setFilters((prev) => {
+        const newFilters = { ...prev, [name]: value };
+        if (value === "") delete newFilters[name];
+        return newFilters;
+      });
     }
-  }
+  };
 
   const handleSelectChange = (name: string, value: string) => {
-    setFilters(prev => {
-      const newFilters = { ...prev, [name]: value === 'all' ? undefined : value }
-      if (value === 'all') delete newFilters[name]
-      return newFilters
-    })
-  }
+    setFilters((prev) => {
+      const newFilters = {
+        ...prev,
+        [name]: value === "all" ? undefined : value,
+      };
+      if (value === "all") delete newFilters[name];
+      return newFilters;
+    });
+  };
 
-  const handleDateChange = (range: DateRange) => {
-    setDate(range)
+  const handleDateChange = (range: DateRange | undefined) => {
     if (range?.from && range?.to) {
-      setFilters(prev => ({ ...prev, date: range }))
+      setDate(range); // Only update if the range is valid
+      setFilters((prev) => ({ ...prev, date: range }));
     } else {
-      setFilters(prev => {
-        const { date, ...rest } = prev
-        return rest
-      })
+      // Handle undefined or invalid range
+      setDate(undefined);
+      setFilters((prev) => {
+        const { ...rest } = prev;
+        return rest; // Remove date from filters if it's undefined
+      });
     }
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onFilter(filters)
-  }
+    e.preventDefault();
+    onFilter(filters); // Pass the correctly typed filters object to the onFilter function
+  };
 
   const handleReset = () => {
-    setFilters({})
-    setDate(undefined)
-    onFilter({})
-  }
+    setFilters({});
+    setDate(undefined);
+    onFilter({}); // Reset filters
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="organization" className="text-sm font-medium">Organization</label>
-        <Select onValueChange={(value) => handleSelectChange('organization', value)} value={filters.organization || 'all'}>
+        <label htmlFor="organization" className="text-sm font-medium">
+          Organization
+        </label>
+        <Select
+          onValueChange={(value) => handleSelectChange("organization", value)}
+          value={filters.organization || "all"}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Select" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All</SelectItem>
             {organizations.map((org) => (
-              <SelectItem key={org} value={org}>{org}</SelectItem>
+              <SelectItem key={org} value={org}>
+                {org}
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>
       </div>
       <div>
-        <label htmlFor="userName" className="text-sm font-medium">Username</label>
-        <Input name="userName" placeholder="User" onChange={handleInputChange} value={filters.userName || ''} />
+        <label htmlFor="userName" className="text-sm font-medium">
+          Username
+        </label>
+        <Input
+          name="userName"
+          placeholder="User"
+          onChange={handleInputChange}
+          value={filters.userName || ""}
+        />
       </div>
       <div>
-        <label htmlFor="email" className="text-sm font-medium">Email</label>
-        <Input name="email" placeholder="Email" onChange={handleInputChange} value={filters.email || ''} />
+        <label htmlFor="email" className="text-sm font-medium">
+          Email
+        </label>
+        <Input
+          name="email"
+          placeholder="Email"
+          onChange={handleInputChange}
+          value={filters.email || ""}
+        />
       </div>
       <div>
-        <label htmlFor="date" className="text-sm font-medium">Date Range</label>
+        <label htmlFor="date" className="text-sm font-medium">
+          Date Range
+        </label>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="w-full justify-start text-left font-normal">
+            <Button
+              variant="outline"
+              className="w-full justify-start text-left font-normal"
+            >
               <CalendarIcon className="mr-2 h-4 w-4" />
               {date?.from ? (
                 date.to ? (
                   <>
-                    {format(date.from, "LLL dd, y")} - {format(date.to, "LLL dd, y")}
+                    {format(date.from, "LLL dd, y")} -{" "}
+                    {format(date.to, "LLL dd, y")}
                   </>
                 ) : (
                   format(date.from, "LLL dd, y")
@@ -128,12 +181,25 @@ export default function FilterForm({ onFilter, organizations,initialFilters }: F
         </Popover>
       </div>
       <div>
-        <label htmlFor="phoneNumber" className="text-sm font-medium">Phone Number</label>
-        <Input type="tel" name="phoneNumber" placeholder="Phone Number" onChange={handleInputChange} value={filters.phoneNumber || ''} />
+        <label htmlFor="phoneNumber" className="text-sm font-medium">
+          Phone Number
+        </label>
+        <Input
+          type="tel"
+          name="phoneNumber"
+          placeholder="Phone Number"
+          onChange={handleInputChange}
+          value={filters.phoneNumber || ""}
+        />
       </div>
       <div>
-        <label htmlFor="status" className="text-sm font-medium">Status</label>
-        <Select onValueChange={(value) => handleSelectChange('status', value)} value={filters.status || 'all'}>
+        <label htmlFor="status" className="text-sm font-medium">
+          Status
+        </label>
+        <Select
+          onValueChange={(value) => handleSelectChange("status", value)}
+          value={filters.status || "all"}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Select" />
           </SelectTrigger>
@@ -147,9 +213,11 @@ export default function FilterForm({ onFilter, organizations,initialFilters }: F
         </Select>
       </div>
       <div className="flex justify-between">
-        <Button type="button" variant="outline" onClick={handleReset}>Reset</Button>
+        <Button type="button" variant="outline" onClick={handleReset}>
+          Reset
+        </Button>
         <Button type="submit">Search</Button>
       </div>
     </form>
-  )
+  );
 }
