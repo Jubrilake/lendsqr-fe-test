@@ -1,17 +1,16 @@
-import { ColumnDef,FilterFn } from "@tanstack/react-table";
+import { ColumnDef, FilterFn } from "@tanstack/react-table";
 import { formatDate, statusStyles } from "@/lib/utils";
 import { IoFilter } from "react-icons/io5";
 import { UserDataType } from "./users.model";
 import UserActionsDropdown from "@/components/usersSection/UserActionDropDown";
-import {
-  parseISO,
-  isWithinInterval,
-  startOfDay,
-  endOfDay,
-} from "date-fns";
+import { parseISO, isWithinInterval, startOfDay, endOfDay } from "date-fns";
 import { DateRange } from "react-day-picker";
 
-const dateRangeFilter: FilterFn<UserDataType> = (row, columnId, value: DateRange) => {
+const dateRangeFilter: FilterFn<UserDataType> = (
+  row,
+  columnId,
+  value: DateRange
+) => {
   if (!value || !value.from || !value.to) return true;
   const cellValue = row.getValue(columnId) as string;
   const dateValue = parseISO(cellValue);
@@ -123,8 +122,7 @@ export const columns: ColumnDef<UserDataType>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const user = row.original; // Get the row data
-
+      const user = row.original;
       return <UserActionsDropdown userId={user.id} />;
     },
   },

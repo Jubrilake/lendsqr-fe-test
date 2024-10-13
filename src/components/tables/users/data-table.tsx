@@ -97,8 +97,8 @@ export function DataTable<TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header, index) => {
-                  const isMobileHidden = index >= 2; // Only show the first two columns and action column on mobile
-                  const isActionColumn = header.column.id === "actions"; // Assuming the column for actions is named "actions"
+                  const isMobileHidden = index >= 2;
+                  const isActionColumn = header.column.id === "actions";
 
                   return (
                     <TableHead

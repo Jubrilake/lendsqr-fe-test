@@ -1,7 +1,3 @@
-// UserActionsDropdown.tsx
-
-"use client";
-
 import {
   DropdownMenu,
   DropdownMenuTrigger,

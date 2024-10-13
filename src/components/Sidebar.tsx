@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import sidebarLinks from "@/data/sidebarLinks";
-
 import { BriefCase } from "@/assets";
 import { ChevronDown, ChevronUp } from "lucide-react";
 

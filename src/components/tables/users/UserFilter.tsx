@@ -75,21 +75,20 @@ export default function FilterForm({
 
   const handleDateChange = (range: DateRange | undefined) => {
     if (range?.from && range?.to) {
-      setDate(range); // Only update if the range is valid
+      setDate(range);
       setFilters((prev) => ({ ...prev, date: range }));
     } else {
-      // Handle undefined or invalid range
       setDate(undefined);
       setFilters((prev) => {
         const { ...rest } = prev;
-        return rest; // Remove date from filters if it's undefined
+        return rest;
       });
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onFilter(filters); // Pass the correctly typed filters object to the onFilter function
+    onFilter(filters);
   };
 
   const handleReset = () => {

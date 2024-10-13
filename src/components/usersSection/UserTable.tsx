@@ -7,7 +7,6 @@ import Preloader from "../shared/PreLoader";
 const UserTable = () => {
   const { data: userData, isLoading } = useGetAllUsers();
 
-  // Extract only the necessary properties
   const filteredUserData =
     userData?.map((user: UserDataType) => ({
       id: user.id,

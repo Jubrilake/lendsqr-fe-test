@@ -1,5 +1,4 @@
 import { useState } from "react";
-// export { default as Logo } from "../assets/logo.svg?react";
 import { Link, useLocation } from "react-router-dom";
 import sidebarLinks from "@/data/sidebarLinks";
 import { Menu, Search, ChevronDown, ChevronUp } from "lucide-react";
@@ -13,7 +12,6 @@ import {
 import { BriefCase } from "@/assets";
 import { Sheet, SheetContent, SheetTrigger } from "@/ui/sheet";
 import { Input } from "@/ui/input";
-// import logo from "../assets/logo.svg";
 import { Profile, Bell } from "@/assets";
 import { Logo } from "@/assets";
 
@@ -40,7 +38,11 @@ const Header: React.FC = () => {
     <header className="header">
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="shrink-0 flex lg:hidden">
+          <Button
+            variant="outline"
+            size="icon"
+            className="shrink-0 flex lg:hidden"
+          >
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
