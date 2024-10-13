@@ -23,7 +23,7 @@ const EducationAndEmployment: React.FC<PersonalInfoProps> = ({ user }) => {
   return (
     <div className="py-5 border-b-2 edu_Employ">
       {/* Title */}
-      <h1 className="usertitle">Education and Employment</h1>
+      <h3 className="usertitle">Education and Employment</h3>
 
       <div className="userGrid">
         {/* Level of Education */}
@@ -51,7 +51,9 @@ const EducationAndEmployment: React.FC<PersonalInfoProps> = ({ user }) => {
         </div>
         {/* Office Email */}
         <div>
-          <h1 className="userheading">Office Email</h1>
+          <h1 className="userheading" data-testid="office-email">
+            Office Email
+          </h1>
           <p className="userParagrapgh">{user.officeEmail}</p>
         </div>
 

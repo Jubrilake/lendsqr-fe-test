@@ -9,7 +9,7 @@ const UserDetail = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate(-1);
+    navigate("/users");
   };
   return (
     <main className="grid grid-cols-[100%] flex-1 -z-10 flex-col lg:ml-60 ml:0 sm:pt-32 gap-4 p-4 md:gap-8 sm:px-14 bg-muted-foreground/5">
@@ -21,7 +21,7 @@ const UserDetail = () => {
         <span className="text-[16px]">Back to users</span>
       </button>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <h1 className="text-primary font-semibold text-2xl">User Details</h1>
+        <h2 className="text-primary font-semibold text-2xl">User Details</h2>
         <div className="flex gap-x-3 flex-row">
           <Button
             className="w-full md:w-auto"

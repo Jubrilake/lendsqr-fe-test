@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Avatar, SolidStar, StrokeStar } from "@/assets";
 import { Button } from "@/ui/button";
 import GeneralDetails from "./generalInfo/GeneralDetails";
-import { FaNairaSign } from "react-icons/fa6";
+
 import { useGetAllUsers } from "@/services/users";
 import { UserFullDataType } from "@/components/tables/users/users.model";
 import { formatNumberWithCommas } from "@/lib/utils";
@@ -103,9 +103,7 @@ const UserDetailTabs: React.FC<UserDetailTabsProps> = ({ userId }) => {
 
               <div className="flex flex-col justify-center items-center lg:items-start w-full lg:w-auto">
                 <h1 className="text-xl font-semibold text-primary leading-10 flex items-center">
-                  <span>
-                    <FaNairaSign />
-                  </span>{" "}
+                  ₦
                   {formatNumberWithCommas(
                     user.bankDetails.accountBalance.slice(1) || "0"
                   )}
