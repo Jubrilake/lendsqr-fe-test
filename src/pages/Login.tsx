@@ -83,25 +83,30 @@ export function Login() {
                 >
                   Password
                 </label>
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  {...form.register("password")}
-                />
-                <span
-                  onClick={togglePasswordVisibility}
-                  className="absolute right-3 top-3 cursor-pointer"
-                >
-                  {showPassword ? (
-                    <FiEyeOff size={20} className="text-primary" />
-                  ) : (
-                    <FiEye size={20} className="text-primary" />
-                  )}
-                </span>
-                <div className="text-red-500 text-xs mt-1">
-                  {form.formState.errors.password?.message}
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    {...form.register("password")}
+                    className="pr-10" // Extra padding to avoid text overlapping the icon
+                  />
+                  <span
+                    onClick={togglePasswordVisibility}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  >
+                    {showPassword ? (
+                      <FiEyeOff size={20} className="text-primary" />
+                    ) : (
+                      <FiEye size={20} className="text-primary" />
+                    )}
+                  </span>
                 </div>
+                {form.formState.errors.password && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {form.formState.errors.password.message}
+                  </div>
+                )}
               </div>
 
               <Button type="submit" variant="success" className="w-full">

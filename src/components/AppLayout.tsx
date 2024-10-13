@@ -6,7 +6,6 @@ export default function AppLayout() {
   return (
     <main className="min-h-screen w-full">
       <Header />
-
       <Sidebar />
       <Outlet />
     </main>
