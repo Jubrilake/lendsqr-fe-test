@@ -87,8 +87,6 @@ test.describe("UserDetail Component", () => {
     await expect(page.locator('text="ACTIVATE USER"')).toBeVisible();
 
     // Check if UserDetailsHeader is rendered
-    //   await expect(page.locator('h3:text("Horn Jenkins")')).toBeVisible();
-
     await expect(page.locator('text="6708e88355d72b9eb892b3ad"')).toBeVisible();
     await expect(page.locator('text="₦1,000,000"')).toBeVisible();
     await expect(page.locator('text="1000000000/Acruex Bank"')).toBeVisible();
@@ -101,10 +99,8 @@ test.describe("UserDetail Component", () => {
   });
 
   test("displays correct personal information", async ({ page }) => {
-    // await expect(page.locator('text="Horn Jenkins"').nth(1)).toBeVisible();
     await expect(page.locator('text="+234 (860) 501-2897"')).toBeVisible();
-    // await expect(page.locator('text="hornjenkins@netagy.com"')).toBeVisible();
-    // await expect(page.locator("data-testid=office-email")).toHaveText("hornjenkins@netagy.com");
+
     await expect(page.locator('text="99999999999"')).toBeVisible();
     await expect(page.locator('text="Prefer not to say"')).toBeVisible();
     await expect(page.locator('text="Married"')).toBeVisible();
@@ -125,7 +121,6 @@ test.describe("UserDetail Component", () => {
     await expect(page.locator('text="Unemployed"')).toBeVisible();
     await expect(page.locator('text="Finance"')).toBeVisible();
     await expect(page.locator('text="1 years"')).toBeVisible();
-    // await expect(page.locator('text="hornjenkins@netagy.com"')).toBeVisible();
     await expect(page.locator('text="₦600,001 - ₦800,000"')).toBeVisible();
     await expect(page.locator('text="₦200,000"')).toBeVisible();
   });
