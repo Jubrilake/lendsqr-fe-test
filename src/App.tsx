@@ -3,7 +3,7 @@ import { Login } from "./pages/Login";
 import Users from "./pages/Users";
 import UserDetail from "./pages/UserDetail";
 import AppLayout from "./components/AppLayout";
-import PageNotFound from "./pages/pagenotfound";
+import PageNotFound from "./pages/PageNotFound";
 
 const App = () => {
   return (
