@@ -56,6 +56,7 @@ export default {
       },
       fontFamily: {
         sans: ["Work Sans", "sans-serif"], // Use the font as the default sans font
+        avenir:["Avenir Next Cyr", "sans-serif"]
       },
       fontSize: {
         xl: "22px", // Custom font size for 22px

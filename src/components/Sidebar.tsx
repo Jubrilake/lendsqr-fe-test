@@ -14,7 +14,7 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div className="sidebar" id="custom-scroll">
       <div className="sidebar-wrapper">
         <div className="switch-organization">
           <button onClick={handleDropdownToggle}>
